@@ -3,20 +3,30 @@ from random import randint, random
 pygame.init()
 pygame.mixer.init()
 
+pygame.mixer.music.load("music.mp3")
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.5)
+
 #create screen
 screen = pygame.display.set_mode((1000, 800))
 pygame.display.set_caption('Flappy by Motus')
 timer = pygame.time.Clock()
+icon = pygame.image.load('wbird.png')
+pygame.display.set_icon(icon)
 
 #game dict:
-bg = pygame.transform.scale(pygame.image.load('bg.jpg'), (1000, 800))
 bird = pygame.transform.scale(pygame.image.load('bird.png'), (100,80))
+bg = pygame.transform.scale(pygame.image.load('bg.jpg'), (1000, 800))
 BLACK = (0, 0, 0)
 GREEN = (30,89,69)
 BLUE = (176,183,198)
 wing = pygame.mixer.Sound('wing.wav')
+wing.set_volume(0.2)
 point = pygame.mixer.Sound('point.wav')
+point.set_volume(0.2)
 die = pygame.mixer.Sound('die.wav')
+die.set_volume(0.3)
+
 
 #game varials:
 play = True
@@ -30,6 +40,7 @@ trubs = [[[300, 0, 60, 400], [300, 600, 60 , 770]], [[800, -100, 60, 400], [800,
 y_change = 0
 gameover = False
 pm = True
+color_bird = False
 
 def collision(trubs):
 	global pm
@@ -111,7 +122,13 @@ while play:
 				y_change = 0
 				score = 0
 				pm = True
-
+			if event.key == pygame.K_r:
+				if color_bird:
+					color_bird = False
+					bird = pygame.transform.scale(pygame.image.load('bird.png'), (100,80))
+				else:
+					color_bird = True
+					bird = pygame.transform.scale(pygame.image.load('wbird.png'), (100,80))
 	if bird_y >= 800 or bird_y <= 0:
 		if pm:
 			die.play()
