@@ -22,15 +22,17 @@ die = pygame.mixer.Sound('die.wav')
 play = True
 score = 0
 speed = 7
-y_speed = 7
+y_speed = 10
 bird_x, bird_y = (100, 400)
 FPS = 60
 gravity = 0.3
 trubs = [[[300, 0, 60, 400], [300, 600, 60 , 770]], [[800, -100, 60, 400], [800, 500, 60 , 770]]]
 y_change = 0
 gameover = False
+pm = True
 
 def collision(trubs):
+	global pm
 	global bird_x
 	global bird_y
 	global gameover
@@ -38,7 +40,9 @@ def collision(trubs):
 		trub = pygame.Rect(trubs[i][0][0], trubs[i][0][1], 60, 360)
 		trub2 = pygame.Rect(trubs[i][1][0], trubs[i][1][1], 60, 360)
 		if trub.collidepoint(bird_x + 90, bird_y) or trub2.collidepoint(bird_x + 90, bird_y + 50):
-			die.play()
+			if pm:
+				die.play()
+				pm = False
 			gameover = True
 
 def update_y(y_change, y_pos):
@@ -88,7 +92,6 @@ while play:
 		pygame.draw.rect(screen, GREEN, trubs[i][1], 0, 3)
 		
 	if gameover:
-		FPS = 1
 		game_over_text = pygame.font.Font('Samson.ttf', 60).render(('GAME OVER PRESS SPACEBAR'), True, BLUE)
 		screen.blit(game_over_text, (170, 260))
 	for event in pygame.event.get():
@@ -107,9 +110,12 @@ while play:
 				trubs = [[[300, 0, 60, 400], [300, 600, 60 , 770]], [[800, -100, 60, 400], [800, 500, 60 , 770]]]
 				y_change = 0
 				score = 0
+				pm = True
 
 	if bird_y >= 800 or bird_y <= 0:
-		die.play()
+		if pm:
+			die.play()
+			pm = False
 		gameover = True
 	pygame.display.flip()
 
