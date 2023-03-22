@@ -3,7 +3,7 @@ from random import randint, random
 pygame.init()
 pygame.mixer.init()
 
-pygame.mixer.music.load("Stuff/music.mp3")
+pygame.mixer.music.load("Stuff/Music/music.ogg")
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.5)
 
@@ -11,20 +11,20 @@ pygame.mixer.music.set_volume(0.5)
 screen = pygame.display.set_mode((1000, 800))
 pygame.display.set_caption('Flappy by Motus')
 timer = pygame.time.Clock()
-icon = pygame.image.load('Stuff/wbird.png')
+icon = pygame.image.load('Stuff/image/wbird.png')
 pygame.display.set_icon(icon)
 
 #game dict:
-bird = pygame.transform.scale(pygame.image.load('Stuff/bird.png'), (100,80))
-bg = pygame.transform.scale(pygame.image.load('Stuff/bg.jpg'), (1000, 800))
+bird = pygame.transform.scale(pygame.image.load('Stuff/image/bird.png'), (100,80))
+bg = pygame.transform.scale(pygame.image.load('Stuff/image/bg.jpg'), (1000, 800))
 BLACK = (0, 0, 0)
 GREEN = (30,89,69)
 BLUE = (176,183,198)
-wing = pygame.mixer.Sound('Stuff/wing.wav')
+wing = pygame.mixer.Sound('Stuff/Music/wing.wav')
 wing.set_volume(0.2)
-point = pygame.mixer.Sound('Stuff/point.wav')
+point = pygame.mixer.Sound('Stuff/Music/point.wav')
 point.set_volume(0.2)
-die = pygame.mixer.Sound('Stuff/die.wav')
+die = pygame.mixer.Sound('Stuff/Music/die.wav')
 die.set_volume(0.3)
 
 
@@ -99,8 +99,8 @@ while play:
 	collision(trubs)
 
 	for i in range(len(trubs)):
-		pygame.draw.rect(screen, GREEN, trubs[i][0], 0, 3)
-		pygame.draw.rect(screen, GREEN, trubs[i][1], 0, 3)
+		pygame.draw.rect(screen, GREEN, trubs[i][0], 0)
+		pygame.draw.rect(screen, GREEN, trubs[i][1], 0)
 		
 	if gameover:
 		game_over_text = pygame.font.Font('Stuff/Samson.ttf', 60).render(('GAME OVER PRESS SPACEBAR'), True, BLUE)
@@ -125,10 +125,10 @@ while play:
 			if event.key == pygame.K_r:
 				if color_bird:
 					color_bird = False
-					bird = pygame.transform.scale(pygame.image.load('Stuff/bird.png'), (100,80))
+					bird = pygame.transform.scale(pygame.image.load('Stuff/image/bird.png'), (100,80))
 				else:
 					color_bird = True
-					bird = pygame.transform.scale(pygame.image.load('Stuff/wbird.png'), (100,80))
+					bird = pygame.transform.scale(pygame.image.load('Stuff/image/wbird.png'), (100,80))
 	if bird_y >= 800 or bird_y <= 0:
 		if pm:
 			die.play()
